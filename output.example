@@ -1,0 +1,60 @@
+performing inverse test
+IP Conversion test succeeded!
+
+subnet mask test /32: 
+255.255.255.255
+subnet mask test /24: 
+255.255.255.0
+subnet mask test /16: 
+255.255.0.0
+subnet mask test /27: 
+255.255.255.224
+
+subnet mask test 60: 
+255.255.255.192
+subnet mask test 25: 
+255.255.255.224
+subnet mask test 5: 
+255.255.255.248
+
+subnet mask test 125: 
+255.255.255.128
+subnet mask test 28: 
+255.255.255.224
+subnet mask test 13: 
+255.255.255.240
+ 
+Network : 172.29.0.0
+Range : 172.29.0.1 - 172.29.1.254
+Broadcast : 172.29.1.255
+Mask : 255.255.254.0
+ 
+Network : 172.29.2.0
+Range : 172.29.2.1 - 172.29.2.254
+Broadcast : 172.29.2.255
+Mask : 255.255.255.0
+ 
+Network : 172.29.3.0
+Range : 172.29.3.1 - 172.29.3.62
+Broadcast : 172.29.3.63
+Mask : 255.255.255.192
+ 
+Network : 172.29.3.64
+Range : 172.29.3.65 - 172.29.3.94
+Broadcast : 172.29.3.95
+Mask : 255.255.255.224
+ 
+Network : 172.29.3.96
+Range : 172.29.3.97 - 172.29.3.98
+Broadcast : 172.29.3.99
+Mask : 255.255.255.254
+ 
+Network : 172.29.3.100
+Range : 172.29.3.101 - 172.29.3.102
+Broadcast : 172.29.3.103
+Mask : 255.255.255.254
+ 
+Network : 172.29.3.104
+Range : 172.29.3.105 - 172.29.3.106
+Broadcast : 172.29.3.107
+Mask : 255.255.255.254

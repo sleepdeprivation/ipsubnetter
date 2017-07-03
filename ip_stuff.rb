@@ -100,58 +100,48 @@ def subnetMaskTestNHost(n)
     puts "subnet mask test "+n.to_s+": ", decimalToIPNotation(getNHostSubnetMask(n))
 end
 
-def performTests()
-
-    puts "performing inverse test";
-    testIPConversions();
-    puts ""
-    subnetMaskTest(32);
-    subnetMaskTest(24);
-    subnetMaskTest(16);
-    subnetMaskTest(27);
-    puts ""
-    subnetMaskTestNHost(60);
-    subnetMaskTestNHost(25);
-    subnetMaskTestNHost(5);
-    puts ""
-    subnetMaskTestNHost(125);
-    subnetMaskTestNHost(28);
-    subnetMaskTestNHost(13);
-
-end
-
 """
     given a list of required numbers of hosts for each subnet,
     and a base IP and a default subnet mask
     perform a subnetting task
 """
-def doSubnetting()
-    #arguments to the function
-    baseIP = "172.29.0.0";
-    defaultMask = "255.255.252.0";
-    reqs = [260,177,50,20,2,2,2];#[125,28,13];#[60, 25, 5];
+def doSubnetting(baseIP, defaultMask, reqs)
     #these things make more sense in our native decimal
     dBaseIP = IPNotationToDecimal(baseIP);
     dDefaultMask = IPNotationToDecimal(defaultMask);
-    reqs.each{|x|
+    reqs = reqs.sort.reverse
+    reqs.inject(Array.new){|list, x|
         startingIP = dBaseIP + 1;
         endingIP = dBaseIP + 2**(Math.log2(x + 1)).ceil - 2
         broadcastAddress = endingIP + 1;
-
-        puts " "
-        puts "Network : "+ decimalToIPNotation(dBaseIP)
-        puts "Range : "+decimalToIPNotation(startingIP)+" - "+
-            decimalToIPNotation(endingIP)
-        puts "Broadcast : " + decimalToIPNotation(broadcastAddress);
-        puts "Mask : " + decimalToIPNotation(getNHostSubnetMask(x));
-
+        p "x: #{x}";
+        list.push({Network: decimalToIPNotation(dBaseIP),
+                    Range:  decimalToIPNotation(startingIP)+" - "+
+                            decimalToIPNotation(endingIP),
+                    Broadcast:  decimalToIPNotation(broadcastAddress),
+                    Mask:   decimalToIPNotation(getNHostSubnetMask(x))});
         dBaseIP = broadcastAddress + 1;
+        list
     }
 end
 
-puts performTests();
 
-puts doSubnetting();
+def performTests()
+    puts "performing inverse test";
+    testIPConversions();
+    puts ""
+    [32, 24, 16, 27].each { |x| subnetMaskTest(x) };
+    puts ""
+    [60,25,5].each{ |x| subnetMaskTestNHost(x) };
+    puts ""
+    [125,28,13].each { |x| subnetMaskTestNHost(x) }
+
+    p doSubnetting("172.29.0.0", "255.255.252.0", [260,177,50,20,2,2,2]);
+
+end
+
+performTests();
+
 
 
 #performTests()
