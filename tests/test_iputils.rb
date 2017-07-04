@@ -6,16 +6,6 @@ class TestIP_Utils < Test::Unit::TestCase
     include IP_utils;
 
     """
-        Get the subnet mask for n hosts,
-        ie if n is 54, we want the smallest subnet
-        mask that can hold 54 hosts
-        again, in decimal
-    """
-    def getNHostSubnetMask(n)
-        return getSubnetMask(32 - (Math.log2(n)).ceil);
-    end
-
-    """
         Test whether the IP conversion functions are actually inverses of each other
     """
     def testIPConversions()

@@ -53,4 +53,15 @@ module IP_utils
         return  ("1"*n).ljust(32, "0").to_i(2)
     end
 
+    """
+        Get the subnet mask for n hosts,
+        ie if n is 54, we want the smallest subnet
+        mask that can hold 54 hosts
+        again, in decimal
+    """
+    def getNHostSubnetMask(n)
+        return getSubnetMask(32 - (Math.log2(n)).ceil);
+    end
+
+
 end
