@@ -1,65 +1,10 @@
-include Enumerable;
+require_relative 'ipaddress'
 require_relative 'iputils'
 require 'json'
 
-
-
-class IPAddress
+class IPSubnet
 
     include IP_utils;
-
-    attr_reader :decimalAddress;
-
-    def initialize(addr=nil)
-        if addr == nil
-            addr = 0
-        end
-        self.set(addr);
-    end
-
-    def to_ip
-        decimalToIPNotation(@decimalAddress);
-    end
-
-    def to_s
-        to_ip;
-    end
-
-    def set(addr)
-        if addr.class == IPAddress
-            @decimalAddress = addr.decimalAddress;
-        elsif addr.class == Fixnum
-            @decimalAddress = addr;
-        elsif addr.class == String;
-            @decimalAddress = IPNotationToDecimal(addr);
-        end
-    end
-
-    """
-    TODO: write tests for this
-    """
-    def -(ip)
-        if ip.class == Fixnum
-            IPAddress.new(@decimalAddress - ip)
-        elsif ip.class == IPAddress
-            IPAddress.new(@decimalAddress - ip.decimalAddress)
-        end
-    end
-
-    """
-    TODO: write tests for this
-    """
-    def +(ip)
-        if ip.class == Fixnum
-            IPAddress.new(@decimalAddress + ip)
-        elsif ip.class == IPAddress
-            IPAddress.new(@decimalAddress + ip.decimalAddress)
-        end
-    end
-end
-
-
-class IPSubnet
 
     def init_ips
         @startingIP = IPAddress.new;
@@ -70,7 +15,7 @@ class IPSubnet
         init_ips;
         @startingIP.set args[0];
         @endingIP.set args[1];
-        @subnetMask.set args[2];
+        @req = args[2];
     end
 
     def to_s
@@ -86,8 +31,8 @@ class IPSubnet
         @endingIP - 1;
     end
 
-    def maskAddress(x)
-        IPAddress.new getNHostSubnetMask x.decimalAddress;
+    def maskAddress
+        IPAddress.new getNHostSubnetMask @req;
     end
 
     def to_json
@@ -115,7 +60,7 @@ class IPSubnetter
         reqs.inject(Array.new){|list, x|
             startingIP = @base_ip + 1;
             endingIP = @base_ip + (2**(Math.log2(x + 1)).ceil - 2)
-            list.push(IPSubnet.new(startingIP, endingIP));
+            list.push(IPSubnet.new(startingIP, endingIP, x));
             @base_ip = list[-1].broadcastAddress + 1;
             list;
         }
